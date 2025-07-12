@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { MessageCircle, BookOpen, Dumbbell, Moon, Sun } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   const { isDarkMode, toggleTheme } = useTheme();
   const location = useLocation();
 

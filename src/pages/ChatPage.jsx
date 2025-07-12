@@ -2,17 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, Heart } from 'lucide-react';
 import BreathingModal from '../components/BreathingModal';
 
-interface Message {
-  id: string;
-  text: string;
-  isUser: boolean;
-  timestamp: Date;
-}
-
-type ChatMode = 'friend' | 'listener' | 'advice';
-
-const ChatPage: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([
+const ChatPage = () => {
+  const [messages, setMessages] = useState([
     {
       id: '1',
       text: "Hi there! I'm here to listen and support you. What's on your mind today?",
@@ -20,11 +11,12 @@ const ChatPage: React.FC = () => {
       timestamp: new Date(),
     },
   ]);
+
   const [inputText, setInputText] = useState('');
-  const [chatMode, setChatMode] = useState<ChatMode>('friend');
+  const [chatMode, setChatMode] = useState('friend');
   const [isTyping, setIsTyping] = useState(false);
   const [showBreathing, setShowBreathing] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -34,7 +26,7 @@ const ChatPage: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
-  const generateListenerResponse = (): string => {
+  const generateListenerResponse = () => {
     const responses = [
       "I'm here for you. Take your time.",
       "I'm listening. You're safe here.",
@@ -51,7 +43,7 @@ const ChatPage: React.FC = () => {
   const handleSendMessage = async () => {
     if (!inputText.trim()) return;
 
-    const userMessage: Message = {
+    const userMessage = {
       id: Date.now().toString(),
       text: inputText,
       isUser: true,
@@ -63,30 +55,28 @@ const ChatPage: React.FC = () => {
     setInputText('');
     setIsTyping(true);
 
-    // Simulate API call delay
     setTimeout(() => {
-      let botResponse: string;
-      
+      let botResponse;
+
       if (chatMode === 'listener') {
         botResponse = generateListenerResponse();
       } else {
-        // For friend and advice modes, this would be replaced with actual API call
         botResponse = `[${chatMode.toUpperCase()} MODE] This response would come from your ML API. User said: "${currentInput}"`;
       }
 
-      const botMessage: Message = {
+      const botMessage = {
         id: (Date.now() + 1).toString(),
         text: botResponse,
         isUser: false,
         timestamp: new Date(),
       };
-      
+
       setMessages(prev => [...prev, botMessage]);
       setIsTyping(false);
     }, 1500);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
@@ -114,9 +104,9 @@ const ChatPage: React.FC = () => {
         {/* Mode Toggle */}
         <div className="flex flex-wrap gap-3 mb-8">
           {[
-            { mode: 'friend' as ChatMode, label: 'Friend Mode', desc: 'Warm & supportive conversations' },
-            { mode: 'listener' as ChatMode, label: 'Silent Listener', desc: 'Gentle & passive listening' },
-            { mode: 'advice' as ChatMode, label: 'Advice Mode', desc: 'Helpful guidance & tips' },
+            { mode: 'friend', label: 'Friend Mode', desc: 'Warm & supportive conversations' },
+            { mode: 'listener', label: 'Silent Listener', desc: 'Gentle & passive listening' },
+            { mode: 'advice', label: 'Advice Mode', desc: 'Helpful guidance & tips' },
           ].map(({ mode, label, desc }) => (
             <button
               key={mode}
@@ -135,9 +125,8 @@ const ChatPage: React.FC = () => {
           ))}
         </div>
 
-        {/* Chat Container */}
+        {/* Chat Box */}
         <div className="bg-white dark:bg-[#2C2542] rounded-2xl shadow-xl border border-gray-200 dark:border-gray-600 h-[600px] flex flex-col overflow-hidden">
-          {/* Messages */}
           <div className="flex-1 overflow-y-auto p-6 space-y-6">
             {messages.map((message) => (
               <div key={message.id} className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
@@ -169,7 +158,7 @@ const ChatPage: React.FC = () => {
                 </div>
               </div>
             ))}
-            
+
             {isTyping && (
               <div className="flex justify-start">
                 <div className="max-w-[75%] mr-4">
@@ -191,7 +180,7 @@ const ChatPage: React.FC = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input */}
+          {/* Input Box */}
           <div className="p-6 border-t border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#1E1B2E]">
             <div className="flex space-x-4">
               <input

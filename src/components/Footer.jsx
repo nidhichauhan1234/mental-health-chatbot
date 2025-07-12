@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Heart, ChevronDown, ChevronUp } from 'lucide-react';
 
-const Footer: React.FC = () => {
-  const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
+const Footer = () => {
+  const [expandedFAQ, setExpandedFAQ] = useState(null);
 
   const faqs = [
     {
@@ -31,57 +31,56 @@ const Footer: React.FC = () => {
     }
   ];
 
-  const toggleFAQ = (index: number) => {
+  const toggleFAQ = (index) => {
     setExpandedFAQ(expandedFAQ === index ? null : index);
   };
 
   return (
-    <footer className="bg-[#FDFCF9] dark:bg-[#1E1B2E] border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="bg-gradient-to-tr from-white via-[#F3E8FF] to-white dark:from-[#1E1B2E] dark:via-[#2C2542] dark:to-[#1E1B2E] border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-6 py-16 space-y-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div>
-            <h3 className="text-2xl font-bold text-[#2E2E2E] dark:text-[#EDE9FE] mb-6">About YouMatter</h3>
-            <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-8">
-        At YouMatter, we believe that every thought, feeling, and moment you experience deserves to be heard—without judgment.
 
-This platform was created to support you through the ups and downs of life, whether you're feeling overwhelmed, simply need a friend to talk to, or want gentle guidance when everything feels too much. Our AI-powered chatbot is built to be a safe space—always available, emotionally aware, and respectful of your privacy.
-
-Unlike traditional therapy apps, YouMatter is not here to replace human connection, but to offer meaningful support in the in-between moments. It's a companion for those late nights, quiet mornings, and everything in between. 🌙✨
-
-Whether you're talking, listening, breathing, or just reading—you are never alone here.
-
-Because at YouMatter, you truly do matter.
+          {/* About Section */}
+          <div className="space-y-6">
+            <h3 className="text-3xl font-extrabold text-purple-600 dark:text-purple-300">About YouMatter</h3>
+            <p className="text-[#3D3D3D] dark:text-[#DAD2FF] text-lg leading-relaxed text-justify">
+              At YouMatter, we believe that every thought, feeling, and moment you experience deserves to be heard—without judgment.
+              <br /><br />
+              This platform was created to support you through the ups and downs of life, whether you're feeling overwhelmed, simply need a friend to talk to, or want gentle guidance when everything feels too much.
+              <br /><br />
+              Our AI-powered chatbot is a safe space—always available, emotionally aware, and respectful of your privacy. Unlike traditional therapy apps, YouMatter is not here to replace human connection, but to offer meaningful support in the in-between moments.
+              <br /><br />
+              Whether you're talking, listening, breathing, or just reading—you are never alone here. Because at YouMatter, <strong>you truly do matter</strong>.
             </p>
-            <div className="text-center lg:text-left">
-              <p className="text-gray-600 dark:text-gray-300 text-lg flex items-center justify-center lg:justify-start space-x-2">
-                <span>Made with</span>
-                <Heart size={20} className="text-[#A78BFA] dark:text-[#C4B5FD] fill-current animate-pulse" />
-                <span>for your peace</span>
-              </p>
+            <div className="flex items-center justify-center lg:justify-start gap-2 pt-4">
+              <p className="text-gray-700 dark:text-purple-200 text-lg">Made with</p>
+              <Heart size={20} className="text-[#A78BFA] dark:text-[#C4B5FD] fill-current animate-pulse" />
+              <p className="text-gray-700 dark:text-purple-200 text-lg">for your peace</p>
             </div>
           </div>
-          
-          <div>
-            <h3 className="text-2xl font-bold text-[#2E2E2E] dark:text-[#EDE9FE] mb-6">Frequently Asked Questions</h3>
+
+          {/* FAQ Section */}
+          <div className="space-y-6">
+            <h3 className="text-3xl font-extrabold text-purple-600 dark:text-purple-300">Frequently Asked Questions</h3>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="border border-gray-200 dark:border-gray-600 rounded-xl overflow-hidden">
+                <div key={index} className="border border-purple-100 dark:border-purple-600 rounded-xl shadow-md dark:shadow-purple-900 transition-all">
                   <button
                     onClick={() => toggleFAQ(index)}
-                    className="w-full p-4 text-left bg-white dark:bg-[#2C2542] hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-between"
+                    className="w-full p-5 text-left bg-white dark:bg-[#2C2542] hover:bg-purple-50 dark:hover:bg-purple-800 transition-all flex items-center justify-between"
                   >
-                    <span className="font-semibold text-[#2E2E2E] dark:text-[#EDE9FE] pr-4">
+                    <span className="font-semibold text-[#4B0082] dark:text-[#EDE9FE] text-base pr-4">
                       {faq.question}
                     </span>
                     {expandedFAQ === index ? (
-                      <ChevronUp size={20} className="text-[#A78BFA] dark:text-[#C4B5FD] flex-shrink-0" />
+                      <ChevronUp size={20} className="text-purple-500 dark:text-purple-300" />
                     ) : (
-                      <ChevronDown size={20} className="text-[#A78BFA] dark:text-[#C4B5FD] flex-shrink-0" />
+                      <ChevronDown size={20} className="text-purple-400 dark:text-purple-300" />
                     )}
                   </button>
                   {expandedFAQ === index && (
-                    <div className="p-4 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-600">
-                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <div className="p-5 bg-purple-50 dark:bg-purple-950 border-t border-purple-200 dark:border-purple-700 text-sm">
+                      <p className="text-[#3F3F3F] dark:text-[#DAD2FF] leading-relaxed text-justify">
                         {faq.answer}
                       </p>
                     </div>
@@ -90,6 +89,7 @@ Because at YouMatter, you truly do matter.
               ))}
             </div>
           </div>
+
         </div>
       </div>
     </footer>

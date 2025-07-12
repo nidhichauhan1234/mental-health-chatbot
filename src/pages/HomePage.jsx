@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle, BookOpen, Heart, Shield, Users } from 'lucide-react';
 
-const HomePage: React.FC = () => {
+const HomePage = () => {
   return (
     <div className="min-h-screen bg-[#FDFCF9] dark:bg-[#1E1B2E] transition-colors duration-300">
       {/* Hero Section */}
@@ -67,21 +67,27 @@ const HomePage: React.FC = () => {
                 <Shield size={32} className="text-[#A78BFA] dark:text-[#D8B4FE]" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-[#EDE9FE] mb-2">Safe Space</h3>
-              <p className="text-gray-600 dark:text-gray-300">Your conversations are private and judgment-free. Share your thoughts safely.</p>
+              <p className="text-gray-600 dark:text-gray-300">
+                Your conversations are private and judgment-free. Share your thoughts safely.
+              </p>
             </div>
             <div className="text-center p-6 bg-[#FDFCF9] dark:bg-[#1E1B2E] rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200">
               <div className="w-16 h-16 bg-[#A78BFA]/10 dark:bg-[#D8B4FE]/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Heart size={32} className="text-[#A78BFA] dark:text-[#D8B4FE]" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-[#EDE9FE] mb-2">Compassionate AI</h3>
-              <p className="text-gray-600 dark:text-gray-300">Our AI adapts to your emotional needs with friend, listener, and advice modes.</p>
+              <p className="text-gray-600 dark:text-gray-300">
+                Our AI adapts to your emotional needs with friend, listener, and advice modes.
+              </p>
             </div>
             <div className="text-center p-6 bg-[#FDFCF9] dark:bg-[#1E1B2E] rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200">
               <div className="w-16 h-16 bg-[#A78BFA]/10 dark:bg-[#D8B4FE]/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users size={32} className="text-[#A78BFA] dark:text-[#D8B4FE]" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-[#EDE9FE] mb-2">Expert Content</h3>
-              <p className="text-gray-600 dark:text-gray-300">Access curated wellness articles and guided exercises from mental health experts.</p>
+              <p className="text-gray-600 dark:text-gray-300">
+                Access curated wellness articles and guided exercises from mental health experts.
+              </p>
             </div>
           </div>
         </div>
@@ -91,3 +97,4 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
+

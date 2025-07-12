@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 
-interface BreathingModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-const BreathingModal: React.FC<BreathingModalProps> = ({ isOpen, onClose }) => {
-  const [phase, setPhase] = useState<'inhale' | 'hold' | 'exhale'>('inhale');
+const BreathingModal = ({ isOpen, onClose }) => {
+  const [phase, setPhase] = useState('inhale');
   const [count, setCount] = useState(4);
   const [isActive, setIsActive] = useState(false);
 
@@ -26,7 +21,7 @@ const BreathingModal: React.FC<BreathingModalProps> = ({ isOpen, onClose }) => {
     const timer = setInterval(() => {
       setCount((prev) => {
         if (prev > 1) return prev - 1;
-        
+
         if (phase === 'inhale') {
           setPhase('hold');
           return 4;
@@ -64,7 +59,6 @@ const BreathingModal: React.FC<BreathingModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         <div className="relative flex items-center justify-center mb-12">
-          {/* Outer glow ring */}
           <div 
             className={`absolute w-80 h-80 rounded-full transition-all duration-1000 ${
               isActive && phase === 'inhale' ? 'scale-110 opacity-30' : 
@@ -73,7 +67,6 @@ const BreathingModal: React.FC<BreathingModalProps> = ({ isOpen, onClose }) => {
             } bg-gradient-to-r from-[#A78BFA] to-[#D946EF] dark:from-[#C4B5FD] to-[#F472B6]`}
           />
           
-          {/* Main breathing circle */}
           <div 
             className={`relative w-64 h-64 rounded-full border-4 border-[#A78BFA] dark:border-[#C4B5FD] transition-all duration-1000 flex items-center justify-center shadow-2xl ${
               isActive && phase === 'inhale' ? 'scale-125 bg-gradient-to-br from-[#A78BFA]/20 to-[#D946EF]/20' : 
@@ -81,7 +74,6 @@ const BreathingModal: React.FC<BreathingModalProps> = ({ isOpen, onClose }) => {
               'scale-100 bg-gradient-to-br from-[#A78BFA]/15 to-[#D946EF]/15'
             }`}
           >
-            {/* Inner content */}
             <div className="text-center">
               <div className="text-5xl font-bold text-[#A78BFA] dark:text-[#C4B5FD] mb-2 tabular-nums">
                 {count}
@@ -90,8 +82,7 @@ const BreathingModal: React.FC<BreathingModalProps> = ({ isOpen, onClose }) => {
                 {phase === 'hold' ? 'Hold' : phase === 'inhale' ? 'Breathe In' : 'Breathe Out'}
               </div>
             </div>
-            
-            {/* Floating particles */}
+
             {isActive && (
               <>
                 <div className="absolute top-4 right-8 w-2 h-2 bg-[#A78BFA] dark:bg-[#C4B5FD] rounded-full animate-ping opacity-60" />
@@ -108,23 +99,23 @@ const BreathingModal: React.FC<BreathingModalProps> = ({ isOpen, onClose }) => {
               onClick={startBreathing}
               className="w-full bg-gradient-to-r from-[#A78BFA] to-[#9333EA] dark:from-[#C4B5FD] dark:to-[#A78BFA] hover:from-[#9333EA] hover:to-[#7C3AED] text-white dark:text-[#1E1B2E] py-4 px-8 rounded-xl font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
             >
-             Begin Breathing Exercise
+              Begin Breathing Exercise
             </button>
           ) : (
             <button
               onClick={stopBreathing}
               className="w-full bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white py-4 px-8 rounded-xl font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-xl"
             >
-             Pause Exercise
+              Pause Exercise
             </button>
           )}
           
           <div className="text-center">
             <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-             <span className="font-medium">Breathe in</span> for 4 seconds • <span className="font-medium">Hold</span> for 4 • <span className="font-medium">Breathe out</span> for 6
+              <span className="font-medium">Breathe in</span> for 4 seconds • <span className="font-medium">Hold</span> for 4 • <span className="font-medium">Breathe out</span> for 6
             </p>
             <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
-             Let your body find its natural rhythm
+              Let your body find its natural rhythm
             </p>
           </div>
         </div>

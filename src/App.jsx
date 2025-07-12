@@ -6,7 +6,7 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import ChatPage from './pages/ChatPage';
 import BlogsPage from './pages/BlogsPage';
-import ExercisesPage from './pages/ExercisesPage';
+import ExercisesPage from './pages/ExercisesPage.jsx';
 
 function AppContent() {
   const location = useLocation();
