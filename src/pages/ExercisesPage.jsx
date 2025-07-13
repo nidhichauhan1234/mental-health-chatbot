@@ -4,6 +4,7 @@ import BreathingModal from '../components/BreathingModal';
 
 const ExercisesPage = () => {
   const [showBreathing, setShowBreathing] = useState(false);
+  const [breathingType, setBreathingType] = useState('4-4-6');
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -158,6 +159,7 @@ const ExercisesPage = () => {
 
   const startExercise = (id) => {
     if (id === 'breathing-4-4-6' || id === 'box-breathing') {
+      setBreathingType(id === 'box-breathing' ? '4-4-4-4' : '4-4-6');
       setShowBreathing(true);
       return;
     }
@@ -207,8 +209,103 @@ const ExercisesPage = () => {
       </div>
 
       {selectedExercise ? (
-        // paste the full Exercise Player JSX here
-        <div>...</div>
+        // Exercise Player
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 max-w-4xl mx-auto">
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={stopExercise}
+                className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+              >
+                <ArrowLeft size={24} />
+              </button>
+              <div>
+                <h2 className="text-2xl font-bold text-[#2E2E2E] dark:text-[#EDE9FE]">
+                  {exercises.find(e => e.id === selectedExercise)?.title}
+                </h2>
+                <p className="text-gray-600 dark:text-gray-300">
+                  {exercises.find(e => e.id === selectedExercise)?.description}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-8 mb-8">
+            <div className="text-center mb-6">
+              <div className="text-6xl font-bold text-[#A78BFA] dark:text-[#C4B5FD] mb-2">
+                {currentStep + 1}
+              </div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">
+                Step {currentStep + 1} of {exercises.find(e => e.id === selectedExercise)?.steps.length}
+              </div>
+            </div>
+
+            <div className="text-center mb-8">
+              <div className="text-lg text-[#2E2E2E] dark:text-[#EDE9FE] leading-relaxed max-w-2xl mx-auto">
+                {exercises.find(e => e.id === selectedExercise)?.steps[currentStep]}
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center space-x-4 mb-6">
+              <button
+                onClick={prevStep}
+                disabled={currentStep === 0}
+                className="p-3 rounded-full bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <ArrowLeft size={20} />
+              </button>
+
+              {isPlaying ? (
+                <button
+                  onClick={pauseExercise}
+                  className="p-4 rounded-full bg-[#A78BFA] dark:bg-[#C4B5FD] text-white dark:text-[#1E1B2E] hover:bg-[#9333EA] dark:hover:bg-[#A78BFA] transition-colors shadow-lg"
+                >
+                  <Pause size={24} />
+                </button>
+              ) : (
+                <button
+                  onClick={playExercise}
+                  className="p-4 rounded-full bg-[#A78BFA] dark:bg-[#C4B5FD] text-white dark:text-[#1E1B2E] hover:bg-[#9333EA] dark:hover:bg-[#A78BFA] transition-colors shadow-lg"
+                >
+                  <Play size={24} />
+                </button>
+              )}
+
+              <button
+                onClick={nextStep}
+                disabled={currentStep === (exercises.find(e => e.id === selectedExercise)?.steps.length || 0) - 1}
+                className="p-3 rounded-full bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <ArrowRight size={20} />
+              </button>
+            </div>
+
+            <div className="flex items-center justify-center space-x-4">
+              <button
+                onClick={resetExercise}
+                className="flex items-center space-x-2 px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors"
+              >
+                <RotateCcw size={16} />
+                <span>Reset</span>
+              </button>
+            </div>
+
+            {isPlaying && (
+              <div className="mt-6">
+                <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400 mb-2">
+                  <span>Time: {stepTimer}s</span>
+                  <span>Next step in: {maxStepTime - stepTimer}s</span>
+                </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                  <div
+                    className="bg-[#A78BFA] dark:bg-[#C4B5FD] h-2 rounded-full transition-all duration-1000"
+                    style={{ width: `${(stepTimer / maxStepTime) * 100}%` }}
+                  ></div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       ) : (
         // Exercise Grid
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -246,7 +343,7 @@ const ExercisesPage = () => {
       )}
     </div>
 
-    <BreathingModal isOpen={showBreathing} onClose={() => setShowBreathing(false)} />
+    <BreathingModal isOpen={showBreathing} onClose={() => setShowBreathing(false)} breathingType={breathingType} />
   </div>
 );
 
