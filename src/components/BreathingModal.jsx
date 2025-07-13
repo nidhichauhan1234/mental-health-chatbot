@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 
-const BreathingModal = ({ isOpen, onClose }) => {
+const BreathingModal = ({ isOpen, onClose, breathingType = '4-4-6' }) => {
   const [phase, setPhase] = useState('inhale');
   const [count, setCount] = useState(4);
   const [isActive, setIsActive] = useState(false);
@@ -27,8 +27,16 @@ const BreathingModal = ({ isOpen, onClose }) => {
           return 4;
         } else if (phase === 'hold') {
           setPhase('exhale');
-          return 6;
-        } else {
+          return breathingType === '4-4-6' ? 6 : 4;
+        } else if (phase === 'exhale') {
+          if (breathingType === '4-4-4-4') {
+            setPhase('hold-empty');
+            return 4;
+          } else {
+            setPhase('inhale');
+            return 4;
+          }
+        } else if (phase === 'hold-empty') {
           setPhase('inhale');
           return 4;
         }
@@ -36,7 +44,7 @@ const BreathingModal = ({ isOpen, onClose }) => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [isActive, phase]);
+  }, [isActive, phase, breathingType]);
 
   const startBreathing = () => setIsActive(true);
   const stopBreathing = () => setIsActive(false);
@@ -79,7 +87,7 @@ const BreathingModal = ({ isOpen, onClose }) => {
                 {count}
               </div>
               <div className="text-lg text-[#2E2E2E] dark:text-[#EDE9FE] capitalize font-medium tracking-wide">
-                {phase === 'hold' ? 'Hold' : phase === 'inhale' ? 'Breathe In' : 'Breathe Out'}
+                {phase === 'hold' ? 'Hold' : phase === 'hold-empty' ? 'Hold Empty' : phase === 'inhale' ? 'Breathe In' : 'Breathe Out'}
               </div>
             </div>
 
@@ -112,7 +120,15 @@ const BreathingModal = ({ isOpen, onClose }) => {
           
           <div className="text-center">
             <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-              <span className="font-medium">Breathe in</span> for 4 seconds • <span className="font-medium">Hold</span> for 4 • <span className="font-medium">Breathe out</span> for 6
+              {breathingType === '4-4-6' ? (
+                <>
+                  <span className="font-medium">Breathe in</span> for 4 seconds • <span className="font-medium">Hold</span> for 4 • <span className="font-medium">Breathe out</span> for 6
+                </>
+              ) : (
+                <>
+                  <span className="font-medium">Breathe in</span> for 4 • <span className="font-medium">Hold</span> for 4 • <span className="font-medium">Breathe out</span> for 4 • <span className="font-medium">Hold empty</span> for 4
+                </>
+              )}
             </p>
             <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
               Let your body find its natural rhythm

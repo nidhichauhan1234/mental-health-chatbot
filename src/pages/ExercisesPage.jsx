@@ -4,6 +4,7 @@ import BreathingModal from '../components/BreathingModal';
 
 const ExercisesPage = () => {
   const [showBreathing, setShowBreathing] = useState(false);
+  const [breathingType, setBreathingType] = useState('4-4-6');
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -158,6 +159,7 @@ const ExercisesPage = () => {
 
   const startExercise = (id) => {
     if (id === 'breathing-4-4-6' || id === 'box-breathing') {
+      setBreathingType(id === 'box-breathing' ? '4-4-4-4' : '4-4-6');
       setShowBreathing(true);
       return;
     }
@@ -341,7 +343,7 @@ const ExercisesPage = () => {
       )}
     </div>
 
-    <BreathingModal isOpen={showBreathing} onClose={() => setShowBreathing(false)} />
+    <BreathingModal isOpen={showBreathing} onClose={() => setShowBreathing(false)} breathingType={breathingType} />
   </div>
 );
 
